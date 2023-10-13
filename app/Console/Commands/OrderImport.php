@@ -47,6 +47,9 @@ class OrderImport extends Command
             //Get first line for the header
             $headers = fgetcsv($file);
 
+            //Start with 2 since headline is the first
+            $linecount = 2;
+
             //Going through all line and link to the header as key
             while (($row = fgetcsv($file)) !== false) {
                 $item = [];
@@ -54,13 +57,18 @@ class OrderImport extends Command
                     $item[$headers[$key]] = $value ?: null;
                 }
 
-                // Find or create an order based on 'Order ID'
-                $order = Order::firstOrCreate(
-                    ['id' => $item['Order ID']],
-                    [
-                        'customer_name' => $item['Customer Name']
-                    ]
-                );
+                try {
+                    // Find or create an order based on 'Order ID'
+                    $order = Order::firstOrCreate(
+                        ['id' => $item['Order ID']],
+                        [
+                            'customer_name' => $item['Customer Name']
+                        ]
+                    );
+                } catch (Throwable $e) {
+                    $this->error('Validation issue with line ' . $linecount);
+                    return Command::FAILURE;
+                }
 
                 // Find the component based on 'SKU' or inform the user need update
                 try {
@@ -71,17 +79,34 @@ class OrderImport extends Command
                 }
 
                 // Find or create an order item based on the order and the component
-                OrderList::firstOrCreate(
-                    ['order_id' => $order->id, 'component_id' => $component->id],
-                    ['quantity' => $item['Quantity']]
-                );
+                try {
+                    OrderList::firstOrCreate(
+                        ['order_id' => $order->id, 'component_id' => $component->id],
+                        ['quantity' => $item['Quantity']]
+                    );
+                } catch (Throwable $e) {
+                    $this->error('Validation issue with line ' . $linecount);
+                    return Command::FAILURE;
+                }
 
+                $linecount++;
             }
 
             fclose($file);
         } else {
             $this->error('Unable to open the file.');
             return Command::FAILURE;
+        }
+
+        //Update all order total weight
+        $noWeightOrders = Order::select("*")
+            ->whereNull('total_weight')
+            ->get();
+
+        foreach ($noWeightOrders as $order) {
+            $totalWeight = $order->calculateTotalWeight();
+            $order->total_weight = $totalWeight;
+            $order->save();
         }
 
         $this->info('Orders imported successfully.');

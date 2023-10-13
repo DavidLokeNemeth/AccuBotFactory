@@ -51,14 +51,20 @@ class OrderComponents extends Command
                     ['category' => $component['category']]
                 );
 
-                Component::updateOrCreate(
-                    ['sku' => $component['sku']],
-                    [
-                        'description' => $component['product_name'],
-                        'category_id' => $category->id,
-                        'weight' => $component['weight'],
-                    ]
-                );
+                // create or update the component
+                try {
+                    Component::updateOrCreate(
+                        ['sku' => $component['sku']],
+                        [
+                            'description' => $component['product_name'],
+                            'category_id' => $category->id,
+                            'weight' => $component['weight'],
+                        ]
+                    );
+                } catch (Throwable $e) {
+                    $this->error('Validation issue with SKU:' . $component['sku']);
+                    return Command::FAILURE;
+                }
             }
 
             // Check if there are more pages of data.
