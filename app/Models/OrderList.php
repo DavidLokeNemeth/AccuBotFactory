@@ -16,12 +16,18 @@ class OrderList extends Model
         'quantity',
     ];
 
-    //Validation rules
+    /**
+     * Validation rules
+     *
+     * @var string[]
+     */
     public static $rules = [
         'quantity' => 'required|integer',
     ];
 
-    //Validation before save
+    /**
+     * Validation before save setup
+     */
     public static function boot()
     {
         parent::boot();

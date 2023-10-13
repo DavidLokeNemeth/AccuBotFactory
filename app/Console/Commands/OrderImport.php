@@ -30,7 +30,7 @@ class OrderImport extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle():int
     {
         //Get the file path from the command line
         $filePath = $this->argument('filePath');
@@ -48,7 +48,7 @@ class OrderImport extends Command
             $headers = fgetcsv($file);
 
             //Start with 2 since headline is the first
-            $linecount = 2;
+            $lineCount = 2;
 
             //Going through all line and link to the header as key
             while (($row = fgetcsv($file)) !== false) {
@@ -66,7 +66,7 @@ class OrderImport extends Command
                         ]
                     );
                 } catch (Throwable $e) {
-                    $this->error('Validation issue with line ' . $linecount);
+                    $this->error('Validation issue with line ' . $lineCount);
                     return Command::FAILURE;
                 }
 
@@ -85,7 +85,7 @@ class OrderImport extends Command
                         ['quantity' => $item['Quantity']]
                     );
                 } catch (Throwable $e) {
-                    $this->error('Validation issue with line ' . $linecount);
+                    $this->error('Validation issue with line ' . $lineCount);
                     return Command::FAILURE;
                 }
 

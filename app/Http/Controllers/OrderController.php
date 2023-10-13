@@ -10,9 +10,9 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         $orders = Order::all();
 
@@ -23,9 +23,9 @@ class OrderController extends Controller
      * Display the order.
      *
      * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function show(Order $order)
+    public function show(Order $order): \Illuminate\View\View
     {
         return view('order.show', compact('order'));
     }
@@ -34,21 +34,21 @@ class OrderController extends Controller
      * Show the form for editing the order robotic name.
      *
      * @param  \App\Models\Order  $order
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function edit(Order $order)
+    public function edit(Order $order): \Illuminate\View\View
     {
         return view('order.edit', compact('order'));
     }
 
     /**
-     * Update the order in storage.
+     * Update the order robot_name in storage.
      *
      * @param Request $request
      * @param Order $order
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Order $order): \Illuminate\Http\RedirectResponse
     {
         $order->robot_name = $request->input('robot_name');
         $order->save();

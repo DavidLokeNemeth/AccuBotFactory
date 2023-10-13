@@ -17,14 +17,20 @@ class Component extends Model
         'weight',
     ];
 
-    //Validation rules
+    /**
+     * Validation rules
+     *
+     * @var string[]
+     */
     public static $rules = [
         'sku' => 'required|string',
         'description' => 'required|string',
         'weight' => 'required|regex:/^\d*(\.\d{1,2})?$/',
     ];
 
-    //Validation before save
+    /**
+     * Validation before save setup
+     */
     public static function boot()
     {
         parent::boot();
@@ -38,8 +44,12 @@ class Component extends Model
         });
     }
 
-    // Define the relationship with the category model
-    public function category()
+    /**
+     * Define the relationship with the category model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

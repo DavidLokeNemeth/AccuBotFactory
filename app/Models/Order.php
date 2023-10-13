@@ -16,14 +16,20 @@ class Order extends Model
         'customer_name',
     ];
 
-    //Validation rules
+    /**
+     * Validation rules
+     *
+     * @var string[]
+     */
     public static $rules = [
         'id' => 'required|integer',
         'customer_name' => 'required|string',
         'robot_name' => 'nullable|string',
     ];
 
-    //Validation before save
+    /**
+     * Validation before save setup
+     */
     public static function boot()
     {
         parent::boot();
@@ -37,22 +43,34 @@ class Order extends Model
         });
     }
 
-    // Define the relationship with the Component model
-    public function items()
+    /**
+     * Define the relationship with the Component model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function items(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Component::class, 'order_lists')->withPivot('quantity');
     }
 
-    // Calculate the total weight of this order
-    public function calculateTotalWeight()
+    /**
+     * Calculate the total weight of this order
+     *
+     * @return float
+     */
+    public function calculateTotalWeight():float
     {
         return $this->items->sum(function ($component) {
             return $component->weight * $component->pivot->quantity;
         });
     }
 
-    //Generate a musing robot name
-    public function generateRobotName()
+    /**
+     * Generate a musing robot name
+     *
+     * @return string
+     */
+    public function generateRobotName():string
     {
         $prefixArray = ['Hydra', 'Sterling', 'Self Emulator', 'Opium', 'Exon', 'Pixels', 'Dragon', 'Arm', 'Intel', 'Zeek', 'Titan', 'Alexa', 'Duster', 'Sully', 'Alicia'];
         $prefix = $prefixArray[array_rand($prefixArray)];
@@ -100,8 +118,12 @@ class Order extends Model
         return $robotName;
     }
 
-    // Calculate the most prevalent category
-    public function calculateMostPrevalentCategory()
+    /**
+     * Calculate the most prevalent category
+     *
+     * @return int
+     */
+    public function calculateMostPrevalentCategory():int
     {
         $mostUsedCategory = DB::table('order_lists')
             ->where('order_id', '=', $this->id)

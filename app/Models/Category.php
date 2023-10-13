@@ -14,12 +14,18 @@ class Category extends Model
         'category',
     ];
 
-    //Validation rules
+    /**
+     * Validation rules
+     *
+     * @var string[]
+     */
     public static $rules = [
         'category' => 'required|string',
     ];
 
-    //Validation before save
+    /**
+     * Validation before save setup
+     */
     public static function boot()
     {
         parent::boot();
