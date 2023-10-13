@@ -37,4 +37,10 @@ class Component extends Model
             Validator::validate($component->toArray(), static::$rules);
         });
     }
+
+    // Define the relationship with the category model
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
