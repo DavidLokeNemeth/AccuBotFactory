@@ -109,6 +109,17 @@ class OrderImport extends Command
             $order->save();
         }
 
+        //Generate Robot name
+        $noRobotName = Order::select("*")
+            ->whereNull('robot_name')
+            ->get();
+
+        foreach ($noRobotName as $order) {
+            $robotName = $order->generateRobotName();
+            $order->robot_name = $robotName;
+            $order->save();
+        }
+
         $this->info('Orders imported successfully.');
         return Command::SUCCESS;
     }
