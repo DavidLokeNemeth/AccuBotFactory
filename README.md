@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Accu Bot Factory Documentation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+##Introduction
 
-## About Laravel
+This coding challenge is part of the interview process for the PHP Developer position at Accu. The purpose of the challenge is to assess my skills and expertise in PHP and Laravel, and to evaluate my ability to build a web application that uses external data sources.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The challenge required me to build a web application that loads order data from a CSV file and component data from an engineering component API, and uses this information to generate amusing robot names based on the most prevalent category of components in each order. I was also needed to display the results in a table on a web page.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation & Setup (Windows)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+###1. Installing XAMPP
+1. Download XAMPP:
+   - Visit the official website of [XAMPP](https://www.apachefriends.org/download.html).
+   - Download the installer suitable for your operating system (Windows, macOS, Linux).
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Run the Installer:
+    - Execute the downloaded installer file.
+    - Follow the on-screen instructions provided by the installer.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Component Selection:
+   - During installation, ensure you select the following components:
+     - PHP
+     - MySQL
+     - PHPMyAdmin
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+4. Starting Services:
+   1. Launch XAMPP Control Panel:
+      - Once installation is complete, launch the XAMPP Control Panel.
+   2. Start Apache:
+      - In the XAMPP Control Panel, locate the Apache module. 
+      - Click the "Start" button next to it. 
+   3. Start MySQL:
+      - In the same XAMPP Control Panel, locate the MySQL module. 
+      - Click the "Start" button next to it.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. Testing the Installation:
+   - Open a web browser.
+   - Enter http://localhost in the address bar and press Enter.
+   - If everything is set up correctly, you should see the XAMPP dashboard.
 
-## Contributing
+###2. Installing Composer for Laravel
+1. Download Composer:
+    - Visit the  Composer [download page](https://getcomposer.org/download/).
+    - Download the `Composer-Setup.exe` file.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+2. Run the Installer:
+    - Execute the downloaded `Composer-Setup.exe` file.
+    - Follow the on-screen instructions provided by the installer.
+    - Make sure to check the box that says "Add PHP to PATH"
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+3. Verification:
+    - Open the Command Prompt.
+    - Run `composer --version`.
+    - If the installation was successful, you should see output displaying the version of Composer installed.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+###3. Setting up the Database
+1. Access PHPMyAdmin:
+    - Open the XAMPP Control Panel.
+    - Click the "Admin" button next to MySQL. This will open PHPMyAdmin in your default web browser.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. Create a New Database:
+    - In PHPMyAdmin, click the "Databases" tab at the top.
+
+
+3. Name the Database:
+    - Create a new database with the exact name "accu_bot".
+
+###4. Setting up the Git Bash
+1. Download Git Bash:
+    - Visit the official [Git website](https://git-scm.com/downloads).
+    - Download the Windows version installer.
+
+
+2. Install Git Bash:
+    - Run the installer.
+    - Follow the on-screen instructions. Make sure to pay attention to any additional options or configurations offered during the installation.
+
+
+3. Configure Git:
+    - Open Git Bash after installation.
+    - Set your username and email address by running the following commands (replace `Your Name` and `your@email.com` with your actual name and email):
+      - `git config --global user.name "Your Name"`
+      - `git config --global user.email your@email.com`
+
+###5. Setting up the Project
+1. Cloning
+   1. Go to the GitHub.com [repository](https://github.com/DavidLokeNemeth/AccuBotFactory).
+   2. Above the list of files, click the green Code button.
+   3. Copy the URL for the repository.
+      - To clone the repository using HTTPS, under "HTTPS", click the copy icon.
+   4. Open Git Bash.
+   5. Change the current working directory to the location where you want the cloned directory.
+   6. Type git clone, and then paste the URL you copied earlier.
+      - `git clone https://github.com/DavidLokeNemeth/AccuBotFactory.git`
+   7. Press Enter to create your local clone.
+
+
+2. Navigate to Project Directory:
+    - Open the Command Prompt.
+    - Use the `cd` command to navigate to the project directory.
+
+
+3. Set Up Environment Variables:
+    - Laravel uses an environment file (.env) to manage configuration variables. Copy the .env.example file and rename it to .env: `cp .env.example .env`.
+
+
+4. Install Dependencies:
+    - Run `composer install` to install project dependencies.
+
+
+5. Generate Application Key:
+    - Run the following command to generate an application key, which is used for encrypting sensitive data: `php artisan key:generate`
+
+
+6. Migrate Database:
+    - Run the following command to create the necessary database tables: `php artisan migrate`.
+
+
+###6. Running PHPUnit Tests
+Execute Tests:
+ - Open your command prompt or terminal.
+ - Use the `cd` command to navigate to the project directory.
+ - Run the following command to execute the PHPUnit tests: `php artisan test`.
+ - After a short time, you should see the output indicating the number of tests that passed and the total number of assertions.
+
+
+
+###7. Application Usage
+1. Navigate to Project Directory:
+   - Open your command prompt or terminal.
+   - Use the `cd` command to navigate to the project directory.
+
+
+2. Import Orders:
+    - To import components from the API server, run the following command: `php artisan order:components`
+    - To import orders, run the following command: `php artisan order:import orders.csv`
+    - These commands import data from the API and the CSV, and performs necessary calculations to generate robot names.
+
+
+3. Start the Server:
+    - Run the following command to start the server: `php artisan serve`.
+    - You'll receive a message indicating the server is running at http://127.0.0.1:8000.
+
+
+4. Access the Web Application:
+    - Open a web browser and go to http://127.0.0.1:8000.
