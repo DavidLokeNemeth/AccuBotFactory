@@ -89,7 +89,7 @@ class OrderImport extends Command
                     return Command::FAILURE;
                 }
 
-                $linecount++;
+                $lineCount++;
             }
 
             fclose($file);
