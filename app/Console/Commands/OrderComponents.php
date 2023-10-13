@@ -35,15 +35,15 @@ class OrderComponents extends Command
         //Define the starting url
         $url = env('COMPONENT_API_URL');
 
-        try {
-            $request = Http::get($url);
-        } catch (Throwable $e) {
-            $this->error('We was not able connect to the service provider.');
-            return Command::FAILURE;
-        }
-
         //Grab every page and import or update the component data
         do {
+            try {
+                $request = Http::get($url);
+            } catch (Throwable $e) {
+                $this->error('We was not able connect to the service provider.');
+                return Command::FAILURE;
+            }
+
             $data = $request->json();
             $components = $data['value'];
             foreach ($components as $component){

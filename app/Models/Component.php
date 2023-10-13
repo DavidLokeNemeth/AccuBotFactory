@@ -21,7 +21,7 @@ class Component extends Model
     public static $rules = [
         'sku' => 'required|string',
         'description' => 'required|string',
-        'weight' => 'required|decimal',
+        'weight' => 'required|regex:/^\d*(\.\d{1,2})?$/',
     ];
 
     //Validation before save
