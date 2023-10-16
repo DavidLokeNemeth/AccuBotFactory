@@ -50,6 +50,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order): \Illuminate\Http\RedirectResponse
     {
+        //For nicer error message
+        $request->validate(['robot_name' => ['required', 'string']]);
+
         $order->robot_name = $request->input('robot_name');
         $order->save();
 
